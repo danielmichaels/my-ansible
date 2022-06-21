@@ -1,0 +1,54 @@
+- name: Install pycharm pro
+  become: true
+  community.general.snap:
+    name: pycharm-professional
+    classic: yes
+  tags:
+    - snap
+    - productivity
+
+- name: Install webstorm
+  become: true
+  community.general.snap:
+    name: webstorm
+    classic: yes
+  tags:
+    - snap
+    - productivity
+
+- name: Install goland
+  become: true
+  community.general.snap:
+    name: goland
+    classic: yes
+  tags:
+    - snap
+    - productivity
+
+- name: Install VSCode
+  become: true
+  community.general.snap:
+    name: code
+    classic: yes
+  tags:
+    - snap
+    - productivity
+
+- name: Install non-classic snaps
+  become: true
+  community.general.snap:
+    name:
+      - multipass
+      - ngrok
+      - obs-studio
+      - slack
+      - signal-desktop
+      - discord
+      - opera
+      - zulip
+      - telegram-desktop
+      - bashtop
+      - starship
+
+# todo install plugins for Intelij IDE's
+# https://www.jetbrains.com/help/pycharm/directories-used-by-the-ide-to-store-settings-caches-plugins-and-logs.html

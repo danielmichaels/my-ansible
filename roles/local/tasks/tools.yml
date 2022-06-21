@@ -1,0 +1,104 @@
+- name: Install packages
+  become: true
+  apt:
+    name: [ "tmux", "wireshark", "gimp", "xclip", "screenkey", "tldr", "ripgrep" ]
+  tags:
+    - install
+    - productivity
+
+- name: Check go exists and version
+  stat:
+    path: /usr/local/go/bin/go
+  register: go_exists
+
+- name: Remove existing /usr/local/go
+  when: go_exists.stat.exists == False
+  become: true
+  ansible.builtin.file:
+    path: /usr/local/go
+    state: absent
+
+- name: Install Golang
+  when: go_exists.stat.exists == False
+  become: true
+  ansible.builtin.unarchive:
+    src: "https://go.dev/dl/go{{ go_version }}.linux-amd64.tar.gz"
+    dest: /usr/local
+    remote_src: yes
+
+- name: Check that Arkade exists
+  stat:
+    path: /usr/local/bin/arkade
+  register: arkade_exists
+
+- name: Download Arkade
+  become: true
+  when: arkade_exists.stat.exists == False
+  ansible.builtin.get_url:
+    url: https://dl.get-arkade.dev
+    dest: /tmp/arkade.sh
+  tags:
+    - install
+    - productivity
+
+- name: Install Arkade
+  become: true
+  when: arkade_exists.stat.exists == False
+  ansible.builtin.shell:
+    cmd: cat /tmp/arkade.sh | sh -s -- -y
+  tags:
+    - install
+    - productivity
+
+- name: Download GH cli install script
+  stat:
+    path: gh
+  register: gh_exists
+
+- name: Install gh cli
+  become: true
+  when: gh_exists.stat.exists == False
+  ansible.builtin.get_url:
+    url: https://raw.githubusercontent.com/danielmichaels/dot/master/installers/install-gh
+    dest: /tmp/gh.sh
+  tags:
+    - install
+    - productivity
+
+- name: Install GH Cli
+  become: true
+  when: gh_exists.stat.exists == False
+  ansible.builtin.shell:
+    cmd: cat /tmp/gh.sh | sh -s -- -y
+  tags:
+    - install
+    - productivity
+
+- name: Install curlie
+  ansible.builtin.shell:
+    cmd: go install github.com/rs/curlie@latest
+  environment:
+    PATH: $PATH:/usr/local/go/bin
+  tags:
+    - install
+    - productivity
+
+- name: Install zet-cmd
+  ansible.builtin.shell:
+    cmd: go install github.com/danielmichaels/zet-cmd/cmd/zet@latest
+  environment:
+    PATH: $PATH:/usr/local/go/bin
+  tags:
+    - install
+    - productivity
+
+- name: Install ds
+  ansible.builtin.shell:
+    cmd: go install github.com/danielmichaels/ds/cmd/ds@latest
+  environment:
+    PATH: $PATH:/usr/local/go/bin
+  tags:
+    - install
+    - productivity
+
+# todo beekeeper-studio

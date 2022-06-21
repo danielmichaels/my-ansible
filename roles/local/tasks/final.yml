@@ -1,0 +1,11 @@
+- name: Apt upgrade all
+  become: true
+  apt:
+    name: "*"
+    state: latest
+
+- name: Apt autoclean and autoremove
+  become: true
+  apt:
+    autoclean: yes
+    autoremove: yes

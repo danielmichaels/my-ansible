@@ -1,0 +1,52 @@
+- name: Cloning .dotfiles
+  ansible.builtin.git:
+    repo: 'git@github.com:danielmichaels/dot.git'
+    dest: "{{ github_repos }}/dot"
+    recursive: yes
+    update: yes
+    clone: yes
+    accept_hostkey: yes
+    version: master
+  tags:
+    - install
+    - dotfiles
+
+- name: Ensure dotfile directories exist
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0755
+  loop:
+    - "{{ lookup('env', 'HOME') }}/.config"
+    - "{{ lookup('env', 'HOME') }}/.local/bin"
+    - "{{ lookup('env', 'HOME') }}/.local/bin/scripts"
+    - "{{ lookup('env', 'HOME') }}/.screenlayout"
+
+
+- name: Symlink dotfiles
+  file:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ lookup('env', 'USER') }}"
+    group: "{{ lookup('env', 'USER') }}"
+    state: link
+    force: yes
+  loop:
+    - { src: "{{ github_repos }}/dot/.zshrc", dest: "{{ lookup('env', 'HOME') }}/.zshrc"}
+    - { src: "{{ github_repos }}/dot/.bashrc", dest: "{{ lookup('env', 'HOME') }}/.bashrc"}
+    - { src: "{{ github_repos }}/dot/.vimrc", dest: "{{ lookup('env', 'HOME') }}/.vimrc"}
+    - { src: "{{ github_repos }}/dot/.ideavimrc", dest: "{{ lookup('env', 'HOME') }}/.ideavimrc"}
+    - { src: "{{ github_repos }}/dot/starship.toml", dest: "{{ lookup('env', 'HOME') }}/.config/starship.toml"}
+    - { src: "{{ github_repos }}/dot/i3", dest: "{{ lookup('env', 'HOME') }}/.config/i3"}
+    - { src: "{{ github_repos }}/dot/i3status-rust", dest: "{{ lookup('env', 'HOME') }}/.config/i3status-rust"}
+    - { src: "{{ github_repos }}/dot/scripts", dest: "{{ lookup('env', 'HOME') }}/.local/bin/scripts"}
+    - { src: "{{ github_repos }}/dot/default-i3.sh", dest: "{{ lookup('env', 'HOME') }}/.screenlayout/default-i3.sh"}
+
+- name: Install dotfile python dependencies
+  pip:
+    name: "{{ item }}"
+  loop:
+    - thefuck
+    - virtualenvwrapper
+    - autorandr
+    - black
