@@ -3,3 +3,6 @@ collections:
   - community.general
 roles:
   - name: artis3n.tailscale
+  - name: gantsign.oh-my-zsh
+  - name: gantsign.golang
+  - name: geerlingguy.docker
