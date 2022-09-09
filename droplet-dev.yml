@@ -1,0 +1,34 @@
+- hosts: all
+  gather_facts: true
+  vars:
+    source_key: "./tasks/.ssh/id_rsa"
+    dest_key: "{{ lookup('env', 'HOME') }}/.ssh/id_rsa"
+    code: "{{ lookup('env', 'HOME') }}/Code"
+    github_repos: "{{ code }}/github"
+    go_version: "1.18.3"
+    user: "dan"
+    user_password: "LocalDev@1;;1"
+  pre_tasks:
+    - name: Update APT Cache if required
+      become: true
+      apt:
+        update_cache: true
+        cache_valid_time: 3600
+  roles:
+    - droplet-dev
+    - role: gantsign.oh-my-zsh
+      users:
+        - username: "{{ user }}"
+    - role: geerlingguy.docker
+      docker_users:
+        - "{{ user }}"
+    - role: gantsign.golang
+      golang_gopath: "/home/{{ user }}/workspace-go"
+    - role: artis3n.tailscale
+      vars:
+        verbose: true
+        state: present
+        # must manually connect to tailscale network. authkeys expire after
+        # 3 months (max) so it's easier to just join the network once the box
+        # has been provisioned.
+        tailscale_up_skip: true

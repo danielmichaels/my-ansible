@@ -1,0 +1,24 @@
+- name: Clone personal repos (public)
+  ansible.builtin.git:
+    repo: 'git@github.com:danielmichaels/{{ item.repo }}.git'
+    dest: "{{ github_repos }}/{{item.repo}}"
+    recursive: yes
+    update: yes
+    clone: yes
+    accept_hostkey: yes
+    version: "{{ item.branch }}"
+    key_file: "/home/{{ user }}/.ssh/id_rsa"
+    force: yes
+  loop:
+    - { repo: zet-cmd, branch: main }
+    - { repo: ds, branch: main }
+    - { repo: storeman, branch: main }
+    - { repo: my-ansible, branch: main }
+    - { repo: zet, branch: main }
+    - { repo: danielms, branch: master }
+    - { repo: tars.run, branch: main }
+    - { repo: faas-templates, branch: main }
+  tags:
+    - install
+    - dotfiles
+

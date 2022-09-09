@@ -1,0 +1,34 @@
+- name: ufw
+  community.general.ufw:
+    rule: allow
+    port: 6443
+
+- name: Check that Arkade exists
+  stat:
+    path: /usr/local/bin/arkade
+  register: arkade_exists
+
+- name: Download Arkade
+  become: true
+  when: arkade_exists.stat.exists == False
+  ansible.builtin.get_url:
+    url: https://dl.get-arkade.dev
+    dest: /tmp/arkade.sh
+
+- name: Install Arkade
+  become: true
+  when: arkade_exists.stat.exists == False
+  ansible.builtin.shell:
+    cmd: cat /tmp/arkade.sh | sh -s -- -y
+
+- name: Apt upgrade all
+  become: true
+  apt:
+    name: "*"
+    state: latest
+
+- name: Apt autoclean and autoremove
+  become: true
+  apt:
+    autoclean: yes
+    autoremove: yes

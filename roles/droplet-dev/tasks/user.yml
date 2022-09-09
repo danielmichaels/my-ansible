@@ -1,0 +1,45 @@
+---
+- name: Install Pre-Requisites
+  apt:
+    name: "*"
+    update_cache: yes
+    state: latest
+    force_apt_get: yes
+
+# Sudo group setup
+- name: Make sure we have a 'wheel' group
+  group:
+    name: wheel
+    state: present
+
+- name: All 'wheel' group to have passwordless sudo
+  lineinfile:
+    path: /etc/sudoers
+    state: present
+    regexp: '^wheel'
+    line: '%wheel ALL=(ALL) NOPASSWD: ALL'
+    validate: '/usr/sbin/visudo -cf %s'
+
+- name: Create new sudo user
+  user:
+    name: "{{ user }}"
+    password: "{{ user_password }}"
+    state: present
+    groups: [ "wheel" ]
+    append: true
+    create_home: true
+    home: "/home/{{ user }}"
+    shell: /bin/bash
+
+- name: Set authorized key for remote user
+  authorized_key:
+    user: "{{ user }}"
+    state: present
+    key: "{{ lookup('file', lookup('env', 'HOME') + '/.ssh/id_rsa.pub') }}"
+
+- name: Disable password auth for root
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    state: present
+    regexp: '^#?PermitRootLogin'
+    line: 'PermitRootLogin prohibit-password'

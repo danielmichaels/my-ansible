@@ -1,0 +1,6 @@
+- name: Install non-classic snaps
+  become: true
+  community.general.snap:
+    name:
+      - ngrok
+      - starship
