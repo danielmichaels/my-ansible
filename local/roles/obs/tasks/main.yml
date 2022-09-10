@@ -1,0 +1,5 @@
+---
+- name: Install obs
+  become: true
+  snap:
+    name: obs-studio

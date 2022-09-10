@@ -1,0 +1,35 @@
+---
+- name: Existing install
+  stat:
+    path: "{{ ansible_user_dir }}/.nvm/nvm.sh"
+  register: nvm_install
+
+- name: Download installer
+  get_url:
+    dest: /tmp/nvm-init.sh
+    mode: 0755
+    url: "https://raw.githubusercontent.com/nvm-sh/nvm/{{ nvm_version }}/install.sh"
+  when: not nvm_install.stat.exists
+
+- name: Execute nvm-init.sh
+  shell: |
+    /tmp/nvm-init.sh -y
+  when: not nvm_install.stat.exists
+
+- name: Remove nvm-init.sh
+  no_log: true
+  file:
+    path: /tmp/nvm-init.sh
+    state: absent
+
+- name: npmjs prefix
+  shell: mkdir -p ~/.local/.npm-global
+  tags:
+    - install
+    - node
+
+- name: npmjs global settings
+  shell: npm config set prefix '~/.local/.npm-global'
+  tags:
+    - install
+    - node

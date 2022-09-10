@@ -1,0 +1,9 @@
+- name: Install chat apps
+  become: true
+  community.general.snap:
+    name:
+      - slack
+      - signal-desktop
+      - discord
+      - zulip
+      - telegram-desktop

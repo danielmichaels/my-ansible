@@ -1,0 +1,62 @@
+- name: Install System Packages 1 (build-essential, cmake, pkg-config, pthread)
+  become: true
+  apt:
+    name: [
+      "build-essential",
+      "cmake",
+      "pkg-config",
+      "libpthread-stubs0-dev"
+    ]
+  tags:
+    - install
+    - core
+
+- name: Install System Packages 2 (lua, unzip, libtool, libtool-bin, gettext)
+  become: true
+  apt:
+    name: [
+      "lua5.1",
+      "unzip",
+      "libtool",
+      "libtool-bin",
+      "gettext"
+    ]
+  tags:
+    - install
+    - core
+
+- name: Install System Packages 3 (the rest)
+  become: true
+  apt:
+    name: [
+      "libarchive-tools",
+      "compton",
+      "vim",
+      "curl",
+      "htop",
+      "lsof",
+      "i3",
+      "i3-wm",
+      "rofi",
+      "ccache",
+      "ninja-build",
+      "python3-pip",
+      "dconf-editor",
+      "nvidia-settings",
+      "pavucontrol",
+      "moreutils",
+      "clangd",
+      "entr",
+      "nmap",
+      "sqlite3",
+      "sqlitebrowser",
+      # wails dev
+      "nsis",
+      "libgtk-3-dev",
+      "libwebkit2gtk-4.0-dev"
+    ]
+  tags:
+    - install
+    - core
+
+

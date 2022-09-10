@@ -1,0 +1,29 @@
+default_roles:
+    - core-setup
+    - git
+    - ssh
+    - zsh
+    - tmux
+    - common-packages
+    - dotfiles
+    - repos
+    - go
+    - go-installs
+    - python
+    - poetry
+    - node
+    - arkade
+    - openfaas
+    - docker
+    - jetbrains
+    - k9s
+    - github-cli
+    - browsers
+    - obs
+    - chat-apps
+    - vscode
+    - hashicorp
+    - k8s
+    - virtual-machines
+    - tailscale
+

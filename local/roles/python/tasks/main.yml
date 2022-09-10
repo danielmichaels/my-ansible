@@ -1,0 +1,28 @@
+---
+- name: Install python deadsnakes
+  become: true
+  ansible.builtin.apt_repository:
+    repo: 'ppa:deadsnakes/ppa'
+    state: present
+
+- name: Install deadsnakes
+  become: true
+  apt:
+    name: [
+            "python3.10",
+            "python3.10-distutils",
+    ]
+
+- name: Update pip
+  pip:
+    name: pip
+    state: latest
+
+- name: Install core pips
+  pip:
+    name: "{{ pips }}"
+  loop_control:
+    loop_var: pips
+  with_items:
+    - github3.py # needed for anisble.community_general.github_release
+

@@ -1,0 +1,23 @@
+---
+- name: Existing install
+  stat:
+    path: "/usr/local/bin/faas-cli"
+  register: install
+
+- name: Download installer
+  get_url:
+    dest: /tmp/faas-init.sh
+    mode: 0755
+    url: "https://cli.openfaas.com"
+  when: not install.stat.exists
+
+- name: Execute faas-init.sh
+  become: true
+  shell: |
+    /tmp/faas-init.sh -y
+  when: not install.stat.exists
+
+- name: Remove nvm-init.sh
+  file:
+    path: /tmp/faas-init.sh
+    state: absent

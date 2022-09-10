@@ -1,0 +1,9 @@
+---
+- name: Install
+  ansible.builtin.package:
+    name:
+      - tmux
+    state: latest
+  become: yes
+
+# config done in dotfiles setup

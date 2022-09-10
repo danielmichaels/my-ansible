@@ -1,0 +1,31 @@
+- name: Ensure .ssh directory exists.
+  become: true
+  become_user: "{{ user }}"
+  file:
+    dest: "{{ dest_key | dirname }}"
+    mode: 0700
+    state: directory
+  tags:
+    - dotfiles
+    - install
+    - ssh
+    -
+- name: Copy SSH keys
+  copy:
+    dest: "{{ ansible_user_dir }}/.ssh/{{ ssh_key_item.key }}"
+    content: "{{ ssh_key_item.value }}"
+    mode: 0400
+  no_log: true
+  loop_control:
+    loop_var: ssh_key_item
+  with_items: "{{ ssh_key | default({}) | dict2items }}"
+
+- name: Copy config
+  copy:
+    dest: "{{ ansible_user_dir }}/.ssh/config"
+    content: "{{ ssh_config_item.value }}"
+    mode: 0600
+  no_log: true
+  loop_control:
+    loop_var: ssh_config_item
+  with_items: "{{ ssh_config | default({}) | dict2items }}"
