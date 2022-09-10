@@ -66,6 +66,7 @@
   when: not starship.stat.exists
 
 - name: "starship: execute installer"
+  become: true
   shell: |
     /tmp/starship-init.sh -y
   when: not starship.stat.exists
