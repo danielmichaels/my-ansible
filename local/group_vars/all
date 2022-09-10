@@ -6,6 +6,7 @@ default_roles:
     - tmux
     - common-packages
     - dotfiles
+    - repos
     - go
     - go-installs
     - python
