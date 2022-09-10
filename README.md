@@ -8,7 +8,7 @@ enough for my simple use cases.
 
 ## Playbooks
 
-**local**
+### Local development environment
 
 For rebuilding my Ubuntu workstation.
 
@@ -20,16 +20,10 @@ Usage:
 
 - Clone the repo on to a new installation
 - cd into the directory
-- `sh dotfiles`
+- `./local/dotfiles`
 
-**non-local playbooks**
-
-To run it:
-
-1. clone this repo
-2. `sh ansible-setup`
-3. `ansible-galaxy install -r requirements.yml`
-4. `ansible-playbook local.yml -u dan -i <ip_or_localhost>, --ask-become-pass --ask-vault-pass` - note the `,`!
+This will set up and install all the required packages for local development. This repo will 
+then live at `$HOME/.dotfiles` and any future updates can be done there.
 
 ## Ansible-vault and values.yml
 
@@ -43,6 +37,14 @@ ansible-vault encrypt_string --vault-password ./local/vault-password.txt 'foobar
 ```
 
 This will create an entry in the `values.yml` file in `yaml` format.
+
+### Remote devices
+
+To run it:
+
+1. clone this repo
+2. `ansible-playbook local.yml -u dan -i <ip_or_localhost>, --ask-become-pass --ask-vault-pass` - note the `,`!
+
 
 ## Development
 

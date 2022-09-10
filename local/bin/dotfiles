@@ -1,0 +1,39 @@
+#!/bin/bash
+set -e
+
+# Paths
+DOTFILES_DIR="$HOME/.dotfiles"
+
+function error() {
+  echo "${arg0:-error}: $*" >&2
+  exit 1
+}
+# Install Ansible
+if ! [ -x "$(command -v ansible)" ]; then
+  sudo apt-add-repository -y ppa:ansible/ansible
+  sudo apt-get update -y
+  sudo apt-get install -y curl git software-properties-common ansible
+fi
+
+# Clone repository
+if ! [[ -d "$DOTFILES_DIR" ]]; then
+  echo "Cloning ansible dotfiles from github."
+  git clone "https://github.com/danielmichaels/my-ansible.git" "$DOTFILES_DIR"
+else
+  echo "Pulling latest git commits from github"
+  git -C "$DOTFILES_DIR" pull
+fi
+# Update Galaxy
+ansible-galaxy install -r "$DOTFILES_DIR/requirements.yml" >/dev/null 2>&1 || error "error: could not install ansible plugins. exiting..."
+
+# Run playbook
+function run() {
+  cd "$DOTFILES_DIR"
+  if [[ -f "$DOTFILES_DIR/local/vault-password.txt" ]]; then
+    ansible-playbook --diff --extra-vars "@$DOTFILES_DIR/local/values.yml" --become-password-file "$DOTFILES_DIR/local/become.txt" --vault-password-file "$DOTFILES_DIR/local/vault-password.txt" "$DOTFILES_DIR/local/main.yml" "$@"
+  else
+    ansible-playbook --diff --extra-vars "@$DOTFILES_DIR/local/values.yml" "$DOTFILES_DIR/local/main.yml" "$@"
+  fi
+}
+
+run "$@"
