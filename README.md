@@ -31,6 +31,21 @@ To run it:
 3. `ansible-galaxy install -r requirements.yml`
 4. `ansible-playbook local.yml -u dan -i <ip_or_localhost>, --ask-become-pass --ask-vault-pass` - note the `,`!
 
+## Ansible-vault and values.yml
+
+To add new values to the `values.yml` file, you need to run the following:
+
+```shell
+# encrypt contents of a file
+ cat ~/.kube/k3s-remote | ansible-vault encrypt_string --vault-password-file ./local/vault-password.txt --stdin-name "kubectl_config.k3s-remote" >> ./local/values.yml
+# encrypt from stdin
+ansible-vault encrypt_string --vault-password ./local/vault-password.txt 'foobar' --name 'the_secret'
+```
+
+This will create an entry in the `values.yml` file in `yaml` format.
+
+## Development
+
 How to develop this in the future:
 
 1. Create a virtualbox ubuntu VM (Ubuntu Desktop)
