@@ -32,7 +32,7 @@ function run() {
   if [[ -f "$DOTFILES_DIR/local/vault-password.txt" ]]; then
     ansible-playbook --diff --extra-vars "@$DOTFILES_DIR/local/values.yml" --become-password-file "$DOTFILES_DIR/local/become.txt" --vault-password-file "$DOTFILES_DIR/local/vault-password.txt" "$DOTFILES_DIR/local/main.yml" "$@"
   else
-    ansible-playbook --diff --extra-vars "@$DOTFILES_DIR/local/values.yml" "$DOTFILES_DIR/local/main.yml" "$@"
+    ansible-playbook --diff --extra-vars "@$DOTFILES_DIR/local/values.yml" "$DOTFILES_DIR/local/main.yml" --ask-vault-pass --ask-become-pass "$@"
   fi
 }
 

@@ -5,11 +5,7 @@
     dest: "{{ dest_key | dirname }}"
     mode: 0700
     state: directory
-  tags:
-    - dotfiles
-    - install
-    - ssh
-    -
+
 - name: Copy SSH keys
   copy:
     dest: "{{ ansible_user_dir }}/.ssh/{{ ssh_key_item.key }}"

@@ -14,3 +14,11 @@
 - name: Install rclone
   ansible.builtin.shell:
     cmd: $(which go) install github.com/rclone/rclone@latest
+
+- name: Install Lazygit
+  ansible.builtin.shell:
+    cmd: $(which go) install github.com/jesseduffield/lazygit@latest
+
+- name: Install Lazydocker
+  ansible.builtin.shell:
+    cmd: $(which go) install github.com/jesseduffield/lazydocker@latest

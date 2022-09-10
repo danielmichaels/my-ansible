@@ -28,7 +28,7 @@
     name:
       - docker
       - docker.io
-      - docker-compose
+      - docker-compose-plugin
       - docker-registry
     state: latest
     update_cache: true

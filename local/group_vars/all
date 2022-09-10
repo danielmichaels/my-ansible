@@ -4,14 +4,14 @@ default_roles:
     - ssh
     - zsh
     - tmux
+    - python
     - common-packages
     - dotfiles
     - repos
     - go
     - go-installs
-    - python
-    - poetry
     - node
+    - poetry
     - arkade
     - openfaas
     - docker

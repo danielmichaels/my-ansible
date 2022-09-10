@@ -18,6 +18,12 @@ Requirements:
 
 Usage:
 
+Run the installer/setup for first time usage. This will clone this repo and set up `local/bin/dotfiles` in
+your `$PATH`. 
+
+```shell
+curl -sLS https://raw.githubusercontent.com/danielmichaels/my-ansible/main/local/bin/dotfiles | bash
+```
 - Clone the repo on to a new installation
 - cd into the directory
 - `./local/dotfiles`

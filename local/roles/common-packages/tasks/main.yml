@@ -9,9 +9,6 @@
       "tldr",
       "ripgrep",
     ]
-  tags:
-    - install
-    - productivity
 
 - name: "bat: get Latest Release from Github"
   community.general.github_release:

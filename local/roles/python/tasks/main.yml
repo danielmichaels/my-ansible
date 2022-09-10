@@ -25,4 +25,5 @@
     loop_var: pips
   with_items:
     - github3.py # needed for anisble.community_general.github_release
+    - pyOpenSSL
 
