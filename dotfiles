@@ -37,9 +37,9 @@ function run_dev() {
 function run() {
   cd "$DOTFILES_DIR"
   if [[ -f "$DOTFILES_DIR/local/vault-password.txt" ]]; then
-    ansible-playbook --diff --extra-vars "@$CONFIG_DIR/local/values.yml" --become-password-file "$CONFIG_DIR/local/become.txt" --vault-password-file "$CONFIG_DIR/local/vault-password.txt" "$DOTFILES_DIR/local/main.yml" "$@"
+    ansible-playbook --diff --extra-vars "@$CONFIG_DIR/values.yml" --become-password-file "$CONFIG_DIR/become.txt" --vault-password-file "$CONFIG_DIR/vault-password.txt" "$DOTFILES_DIR/local/main.yml" "$@"
   else
-    ansible-playbook --diff --extra-vars "@$CONFIG_DIR/local/values.yml" "$DOTFILES_DIR/local/main.yaml" "$@"
+    ansible-playbook --diff --extra-vars "@$CONFIG_DIR/values.yml" "$DOTFILES_DIR/local/main.yml" "$@"
   fi
 }
 
