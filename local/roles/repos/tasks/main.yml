@@ -7,12 +7,11 @@
     clone: yes
     accept_hostkey: yes
     version: "{{ item.branch }}"
+  ignore_errors: true
   loop:
     - { repo: zet-cmd, branch: main }
     - { repo: ds, branch: main }
-    - { repo: storeman, branch: main }
     - { repo: my-ansible, branch: main }
     - { repo: zet, branch: main }
     - { repo: danielms, branch: master }
-    - { repo: tars.run, branch: main }
     - { repo: faas-templates, branch: main }

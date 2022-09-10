@@ -12,7 +12,7 @@ dest_key: "{{ lookup('env', 'HOME') }}/.ssh/id_rsa"
 code: "{{ lookup('env', 'HOME') }}/Code"
 github_repos: "{{ code }}/github"
 
-exclude_roles: [ "tailscale" ]
+exclude_roles: [ "tailscale", "repos" ]
 
 ssh_key:
   id_rsa: !vault |
