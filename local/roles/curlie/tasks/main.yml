@@ -1,0 +1,15 @@
+---
+- name: "Get Latest Release from Github"
+  community.general.github_release:
+    user: rs
+    repo: curlie
+    action: latest_release
+  register: curlie_release
+
+- name: Print Latest release
+  ansible.builtin.debug:
+    var: curlie_release
+
+- name: Download Binary
+  command: "arkade get gh"
+  when: curlie_release.tag != curlie_version

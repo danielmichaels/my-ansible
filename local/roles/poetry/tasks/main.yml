@@ -1,0 +1,22 @@
+---
+- name: Existing install
+  stat:
+    path: "{{ ansible_user_dir }}/.local/share/pypoetry"
+  register: install
+
+- name: Download installer
+  get_url:
+    dest: /tmp/poetry-init.sh
+    mode: 0755
+    url: "https://install.python-poetry.org"
+  when: not install.stat.exists
+
+- name: Execute poetry-init.sh
+  shell: |
+    /tmp/poetry-init.sh -y
+  when: not install.stat.exists
+
+- name: Remove poetry-init.sh
+  file:
+    path: /tmp/poetry-init.sh
+    state: absent

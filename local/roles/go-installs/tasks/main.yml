@@ -1,0 +1,16 @@
+---
+- name: Install curlie
+  ansible.builtin.shell:
+    cmd: go install github.com/rs/curlie@latest
+
+- name: Install zet-cmd
+  ansible.builtin.shell:
+    cmd: $(which go) install github.com/danielmichaels/zet-cmd/cmd/zet@latest
+
+- name: Install ds
+  ansible.builtin.shell:
+    cmd: $(which go) install github.com/danielmichaels/ds/cmd/ds@latest
+
+- name: Install rclone
+  ansible.builtin.shell:
+    cmd: $(which go) install github.com/rclone/rclone@latest

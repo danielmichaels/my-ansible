@@ -3,7 +3,7 @@
 My collection of playbooks for things I need to rebuild quickly,
 frequently or with a level of consistency. 
 
-This isn't production. Stuff might be broken or inefficient but it works well
+This isn't production. Stuff might be broken or inefficient, but it works well
 enough for my simple use cases.
 
 ## Playbooks
@@ -14,8 +14,15 @@ For rebuilding my Ubuntu workstation.
 
 Requirements:
 
-- Ubuntu 20.04 or 22.04 
-- User account `dan`.
+- Ubuntu 20.04.
+
+Usage:
+
+- Clone the repo on to a new installation
+- cd into the directory
+- `sh dotfiles`
+
+**non-local playbooks**
 
 To run it:
 

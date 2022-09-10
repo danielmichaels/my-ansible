@@ -1,0 +1,7 @@
+---
+- name: Install hashicorp tools
+  ansible.builtin.package:
+    name:
+      - packer
+      - terraform
+    state: present

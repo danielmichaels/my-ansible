@@ -1,0 +1,9 @@
+---
+- name: Install VSCode
+  become: true
+  community.general.snap:
+    name: code
+    classic: yes
+  tags:
+    - snap
+    - productivity

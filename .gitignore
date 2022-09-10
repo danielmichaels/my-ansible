@@ -129,3 +129,6 @@ dmypy.json
 .pyre/
 
 .idea/*
+/vault-password.txt
+/local/vault-password.txt
+/local/become.txt

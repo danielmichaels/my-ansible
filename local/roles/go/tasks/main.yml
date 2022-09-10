@@ -1,0 +1,19 @@
+- name: Check go exists and version
+  stat:
+    path: /usr/local/go/bin/go
+  register: go_exists
+
+- name: Remove existing /usr/local/go
+  when: go_exists.stat.exists == False
+  become: true
+  ansible.builtin.file:
+    path: /usr/local/go
+    state: absent
+
+- name: Install Golang
+  when: go_exists.stat.exists == False
+  become: true
+  ansible.builtin.unarchive:
+    src: "https://go.dev/dl/go{{ go_version }}.linux-amd64.tar.gz"
+    dest: /usr/local
+    remote_src: yes

@@ -1,0 +1,12 @@
+---
+- name: Install multipass
+  become: true
+  snap:
+    name: multipass
+
+- name: Install virtualbox
+  become: true
+  ansible.builtin.package:
+    name:
+      - virtualbox
+      - virtualbox-ext-pack

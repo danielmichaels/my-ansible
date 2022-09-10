@@ -1,0 +1,15 @@
+---
+- name: Install
+  community.general.snap:
+    name: "{{ jetbrains_item }}"
+    classic: yes
+  become: yes
+  loop_control:
+    loop_var: jetbrains_item
+  with_items:
+    - goland
+    - pycharm-professional
+    - webstorm
+
+# todo install plugins for Intelij IDE's
+# https://www.jetbrains.com/help/pycharm/directories-used-by-the-ide-to-store-settings-caches-plugins-and-logs.html

@@ -1,0 +1,8 @@
+{
+    "features": {
+        "buildkit": true
+    },
+    "insecure-registries": [
+        "git.k8s.dansult.space"
+    ]
+}

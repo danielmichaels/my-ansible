@@ -1,0 +1,12 @@
+---
+- name: Install tailscale
+  include_role:
+    name: artis3n.tailscale
+  no_log: true
+  vars:
+    verbose: true
+    state: present
+    # must manually connect to tailscale network. authkeys expire after
+    # 3 months (max) so it's easier to just join the network once the box
+    # has been provisioned.
+    tailscale_up_skip: true
