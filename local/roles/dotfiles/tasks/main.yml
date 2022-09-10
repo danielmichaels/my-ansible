@@ -67,7 +67,7 @@
 
 - name: "starship: execute installer"
   shell: |
-    /tmp/starship-init.sh
+    /tmp/starship-init.sh -y
   when: not starship.stat.exists
 
 - name: "starship: remove installer"
