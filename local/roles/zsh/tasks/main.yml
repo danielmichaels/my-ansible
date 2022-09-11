@@ -5,7 +5,9 @@
 
 - name: Change shell to zsh
   become: true
-  shell: chsh -s $(which zsh)
+  user:
+    name: "{{ ansible_user_id }}"
+    shell: /bin/zsh
   tags: *tags_for_zsh_tasks
 
 - name: Check that the oh-my-zsh exists

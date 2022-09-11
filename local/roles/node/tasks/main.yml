@@ -22,6 +22,11 @@
     path: /tmp/nvm-init.sh
     state: absent
 
+- name: Install node LTS
+  when: not nvm_install.stat.exists
+  shell: |
+    nvm install --lts
+
 - name: npmjs prefix
   shell: mkdir -p ~/.local/.npm-global
   tags:
@@ -29,7 +34,9 @@
     - node
 
 - name: npmjs global settings
-  shell: npm config set prefix '~/.local/.npm-global'
+  shell: |
+    source ${HOME}/.bashrc 
+    npm config set prefix '~/.local/.npm-global'
   tags:
     - install
     - node

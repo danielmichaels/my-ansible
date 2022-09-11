@@ -1,24 +1,24 @@
 ---
 - name: Install curlie
   ansible.builtin.shell:
-    cmd: go install github.com/rs/curlie@latest
+    cmd: /usr/local/go/bin/go install github.com/rs/curlie@latest
 
 - name: Install zet-cmd
   ansible.builtin.shell:
-    cmd: $(which go) install github.com/danielmichaels/zet-cmd/cmd/zet@latest
+    cmd: /usr/local/go/bin/go install github.com/danielmichaels/zet-cmd/cmd/zet@latest
 
 - name: Install ds
   ansible.builtin.shell:
-    cmd: $(which go) install github.com/danielmichaels/ds/cmd/ds@latest
+    cmd: /usr/local/go/bin/go install github.com/danielmichaels/ds/cmd/ds@latest
 
 - name: Install rclone
   ansible.builtin.shell:
-    cmd: $(which go) install github.com/rclone/rclone@latest
+    cmd: /usr/local/go/bin/go install github.com/rclone/rclone@latest
 
 - name: Install Lazygit
   ansible.builtin.shell:
-    cmd: $(which go) install github.com/jesseduffield/lazygit@latest
+    cmd: /usr/local/go/bin/go install github.com/jesseduffield/lazygit@latest
 
 - name: Install Lazydocker
   ansible.builtin.shell:
-    cmd: $(which go) install github.com/jesseduffield/lazydocker@latest
+    cmd: /usr/local/go/bin/go install github.com/jesseduffield/lazydocker@latest

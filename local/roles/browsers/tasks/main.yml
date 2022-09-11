@@ -4,6 +4,26 @@
     name:
       - opera
 
+- name: "vivaldi: check installed already"
+  stat:
+    path: "/usr/bin/vivaldi"
+  register: vivaldi_installed
+
+- name: Install hashicorp gpg key
+  when: not vivaldi_installed
+  block:
+    - name: "vivaldi: get apt key"
+      become: true
+      ansible.builtin.get_url:
+        url: "https://repo.vivaldi.com/archive/linux_signing_key.pub"
+        dest: "/usr/share/keyrings/vivaldi.gpg"
+    - name: "vivaldi: add vivaldi to repos"
+      become: true
+      ansible.builtin.apt_repository:
+        repo: "deb https://repo.vivaldi.com/archive/deb/ stable main"
+        state: present
+        filename: vivaldi
+
 - name: Install vivaldi
   become: true
   apt:

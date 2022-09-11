@@ -1,4 +1,17 @@
 ---
+- name: Install hashicorp gpg key
+  become: true
+  ansible.builtin.apt_key:
+    url: "https://apt.releases.hashicorp.com/gpg"
+    state: present
+
+- name: Add repo to sources list
+  become: true
+  ansible.builtin.apt_repository:
+    repo: "deb https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main"
+    state: present
+    filename: hashicorp
+
 - name: Install hashicorp tools
   ansible.builtin.package:
     name:
